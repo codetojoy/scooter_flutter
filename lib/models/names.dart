@@ -1,4 +1,3 @@
-
 const PLAYER_NAMES = [
   "Johann Sebastian Bach",
   "Ludwig van Beethoven",

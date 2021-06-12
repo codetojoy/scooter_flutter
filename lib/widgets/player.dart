@@ -18,7 +18,7 @@ class Player extends StatelessWidget {
     }
     var textStyle = TextStyle(fontSize: fontSize, fontWeight: FontWeight.bold);
     return InkWell(
-        onTap: () { },
+        onTap: () {},
         splashColor: Theme.of(context).primaryColor,
         borderRadius: BorderRadius.circular(15),
         child: Container(

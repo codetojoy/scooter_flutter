@@ -41,14 +41,14 @@ class _MyHomePageState extends State<MyHomePage> {
   bool _isAbbreviatedMode = true;
 
   void init() {
-      final numPeople = PLAYER_NAMES.length;
-      _deck = Deck(numPeople);
-      _deck.shuffle();
-      _people = _deck.cards.map((waro_c.Card c) {
-        final index = c.value - 1;
-        final name = PLAYER_NAMES[index];
-        return Person(name);
-      });
+    final numPeople = PLAYER_NAMES.length;
+    _deck = Deck(numPeople);
+    _deck.shuffle();
+    _people = _deck.cards.map((waro_c.Card c) {
+      final index = c.value - 1;
+      final name = PLAYER_NAMES[index];
+      return Person(name);
+    });
   }
 
   void _shuffleHandler() {
@@ -93,24 +93,23 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
         ),
       ),
-      floatingActionButton: Row(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children:[
-      FloatingActionButton(
-        onPressed: _abbreviatedModeHandler,
-        tooltip: 'Switch abbreviation',
-        child: Icon((_isAbbreviatedMode) ? Icons.zoom_out : Icons.zoom_in),
-      ),
-      FloatingActionButton(
-        onPressed: _shuffleHandler,
-        tooltip: 'Shuffle',
-        child: Icon(Icons.replay),
-      ),
-      FloatingActionButton(
-        onPressed: _playHandler,
-        tooltip: 'Play',
-        child: Icon(Icons.play_circle_filled),
-      ),
+      floatingActionButton:
+          Row(mainAxisAlignment: MainAxisAlignment.end, children: [
+        FloatingActionButton(
+          onPressed: _abbreviatedModeHandler,
+          tooltip: 'Switch abbreviation',
+          child: Icon((_isAbbreviatedMode) ? Icons.zoom_out : Icons.zoom_in),
+        ),
+        FloatingActionButton(
+          onPressed: _shuffleHandler,
+          tooltip: 'Shuffle',
+          child: Icon(Icons.replay),
+        ),
+        FloatingActionButton(
+          onPressed: _playHandler,
+          tooltip: 'Play',
+          child: Icon(Icons.play_circle_filled),
+        ),
       ]),
     );
   }
