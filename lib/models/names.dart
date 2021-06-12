@@ -1,0 +1,23 @@
+
+const PLAYER_NAMES = [
+  "Johann Sebastian Bach",
+  "Ludwig van Beethoven",
+  "Wolfgang Amadeus Mozart",
+  "Franz Schubert",
+  "Richard Wagner",
+  "Antonio Vivaldi",
+  "Johannes Brahms",
+  "Giuseppe Verdi",
+  "Robert Schumann",
+  "Giacomo Puccini",
+  "Antonín Dvorák",
+  "George Handel",
+  "Franz Liszt",
+  "Joseph Haydn",
+  "Frédéric Chopin",
+  "Igor Stravinsky",
+  "Gustav Mahler",
+  "Richard Strauss",
+  "Dmitri Shostakovich",
+  "Hector Berlioz",
+];
