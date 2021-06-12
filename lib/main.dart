@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 
-import './models/card.dart' as waro_c;
-import './models/names.dart';
 import './models/deck.dart';
+import './models/names.dart';
 import './models/person.dart';
-import './widgets/Players.dart';
 import './util/dice.dart';
+import './widgets/Players.dart';
 
 void main() {
   runApp(MyApp());
@@ -44,8 +43,7 @@ class _MyHomePageState extends State<MyHomePage> {
     final numPeople = PLAYER_NAMES.length;
     _deck = Deck(numPeople);
     _deck.shuffle();
-    _people = _deck.cards.map((waro_c.Card c) {
-      final index = c.value - 1;
+    _people = _deck.cards.map((int index) {
       final name = PLAYER_NAMES[index];
       return Person(name);
     });

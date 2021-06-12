@@ -1,14 +1,12 @@
 import 'dart:math';
 
-import './card.dart';
-
 class Deck {
-  final List<Card> _cards;
+  final List<int> _cards;
 
   Deck(int numCards)
-      : _cards = new List<Card>.generate(numCards, (i) => new Card(i + 1));
+      : _cards = new List<int>.generate(numCards, (i) => i);
 
-  List<Card> get cards => _cards;
+  List<int> get cards => _cards;
 
   void shuffle() {
     var rng = new Random();
