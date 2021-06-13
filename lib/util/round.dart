@@ -9,9 +9,9 @@ class Round {
 
   Round() {}
 
-  Round.simple(int magicRoll) {
+  Round.test(int magicRoll, Dice dice) {
     _magicRoll = magicRoll;
-    _dice = new DiceBuilder().build(DiceBuilder.ALWAYS_ONE);
+    _dice = dice;
   }
 
   List<Person> play(List<Person> people) {

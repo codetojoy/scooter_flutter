@@ -1,12 +1,26 @@
+import 'package:mockito/mockito.dart';
 import 'package:scooter_flutter/models/person.dart';
+import 'package:scooter_flutter/util/dice.dart';
 import 'package:scooter_flutter/util/round.dart';
 import 'package:test/test.dart';
 
+class MockDice extends Mock implements Dice {
+  int _fixedMagicRoll;
+
+  MockDice(this._fixedMagicRoll);
+
+  int roll(int max) {
+    return _fixedMagicRoll;
+  }
+}
+
 void main() {
   List<Person> people = [];
+  late Dice dice;
 
   group('Round', () {
     setUp(() {
+      people = [];
       people.add(Person('bach'));
       people.add(Person('chopin'));
       people.add(Person('liszt'));
@@ -14,7 +28,8 @@ void main() {
     });
     test('all survive', () {
       int magicRoll = 1;
-      final round = new Round.simple(magicRoll);
+      dice = MockDice(magicRoll);
+      final round = new Round.test(magicRoll, dice);
 
       // test
       final result = round.play(people);
@@ -22,8 +37,10 @@ void main() {
       expect(4, result.length);
     });
     test('last one survives', () {
+      int fixedRoll = 1;
       int magicRoll = 2;
-      final round = new Round.simple(magicRoll);
+      dice = MockDice(fixedRoll);
+      final round = new Round.test(magicRoll, dice);
 
       // test
       final result = round.play(people);
