@@ -74,7 +74,7 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Players(_people.toList(), _isAbbreviatedMode),
+            Players(_people.toList(), _isAbbreviatedMode, _appBar),
           ],
         ),
       ),
@@ -102,27 +102,3 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
-/*
-  void _pushAbout() {
-    Navigator.of(context).pushNamed(About.routeName,
-        arguments: {C.CONFIG_PARAM: Config.instance});
-  }
-
-  void _cancelGame() {
-    setState(() {
-      L.log('user cancelled');
-      _game.cancel();
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    _appBar = AppBar(
-      title: Text(widget.title),
-      actions: [
-        IconButton(icon: Icon(Icons.settings), onPressed: _pushConfig),
-        IconButton(icon: Icon(Icons.info), onPressed: _pushAbout),
-      ],
-    );
-
-*/
