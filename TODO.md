@@ -4,7 +4,7 @@ TODO:
 
 * next
 * brain-dump:
-    - abbreviations and full name seem to switch?
+    - modal chicken-test for new game, if in progress
     - config screen where user can add/remove players
     - responsive grid  
         - box size

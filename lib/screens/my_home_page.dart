@@ -42,6 +42,9 @@ class _MyHomePageState extends State<MyHomePage> {
   void _abbreviatedModeHandler() {
     setState(() {
       _isAbbreviatedMode = !_isAbbreviatedMode;
+      // for a new game, if user switches mode, we should consider the
+      // game started
+      _inProgress = true;
     });
   }
 
@@ -76,16 +79,16 @@ class _MyHomePageState extends State<MyHomePage> {
       floatingActionButton:
           Row(mainAxisAlignment: MainAxisAlignment.end, children: [
         FloatingActionButton(
-          heroTag: "btnAbbreviatedMode",
-          onPressed: _abbreviatedModeHandler,
-          tooltip: 'Switch abbreviation',
-          child: Icon((_isAbbreviatedMode) ? Icons.zoom_out : Icons.zoom_in),
-        ),
-        FloatingActionButton(
           heroTag: "btnShuffle",
           onPressed: _shuffleHandler,
           tooltip: 'Shuffle',
           child: Icon(Icons.replay),
+        ),
+        FloatingActionButton(
+          heroTag: "btnAbbreviatedMode",
+          onPressed: _abbreviatedModeHandler,
+          tooltip: 'Switch abbreviation',
+          child: Icon((_isAbbreviatedMode) ? Icons.zoom_out : Icons.zoom_in),
         ),
         FloatingActionButton(
           heroTag: "btnPlay",
