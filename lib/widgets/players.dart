@@ -31,7 +31,7 @@ class Players extends StatelessWidget {
 */
 
   Widget _buildLandscape2(List<Widget> widgets, BuildContext context) {
-    final myMediaQuery = MyMediaQuery([0.95], context, _appBar);
+    final myMediaQuery = MyMediaQuery([0.90], context, _appBar);
     final availableHeight = myMediaQuery.values[0];
     return Card(
         child: Container(
@@ -46,7 +46,7 @@ class Players extends StatelessWidget {
                   crossAxisSpacing: 10,
                   mainAxisSpacing: 10,
                 ))),
-        elevation: 10,
+        elevation: 1,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),
         ),
@@ -97,6 +97,6 @@ class Players extends StatelessWidget {
     }).toList();
     return (isLandscape)
         ? _buildLandscape2(widgets, context)
-        : _buildPortrait2(widgets, context);
+        : _buildLandscape2(widgets, context);
   }
 }

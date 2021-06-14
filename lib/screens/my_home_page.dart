@@ -71,12 +71,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       appBar: _appBar,
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Players(_people.toList(), _isAbbreviatedMode, _appBar),
-          ],
-        ),
+        child: Players(_people.toList(), _isAbbreviatedMode, _appBar),
       ),
       floatingActionButton:
           Row(mainAxisAlignment: MainAxisAlignment.end, children: [

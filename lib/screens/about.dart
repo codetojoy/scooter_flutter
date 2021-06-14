@@ -7,7 +7,7 @@ class About extends StatelessWidget {
   static const routeName = '/about';
 
   String _version() {
-    var version = "v1";
+    var version = "v 14-JUN";
     // TODO: this should be a compile-time stamp, based on build
     var now = DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now());
     return '$version $now';
