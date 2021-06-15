@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 import './about.dart';
+import '../models/config.dart';
 import '../models/deck.dart';
-import '../models/names.dart';
 import '../models/person.dart';
 import '../util/round.dart';
 import '../widgets/Players.dart';
@@ -24,12 +24,14 @@ class _MyHomePageState extends State<MyHomePage> {
   late AppBar _appBar;
 
   void init() {
-    final numPeople = PLAYER_NAMES.length;
+    _people = [];
+    final fetcher = Config.instance.getFetcher();
+    final people = fetcher.fetchPeople();
+    final numPeople = people.length;
     _deck = Deck(numPeople);
     _deck.shuffle();
     _people = _deck.cards.map((int index) {
-      final name = PLAYER_NAMES[index];
-      return Person(name);
+      return people[index];
     }).toList();
   }
 

@@ -92,8 +92,9 @@ class Players extends StatelessWidget {
   Widget build(BuildContext context) {
     final isLandscape =
         MediaQuery.of(context).orientation == Orientation.landscape;
+    final isWinner = _people.length == 1;
     final widgets = _people.map<Widget>((Person person) {
-      return Player(person, _isAbbreviatedMode);
+      return Player(person, _isAbbreviatedMode, isWinner);
     }).toList();
     return (isLandscape)
         ? _buildLandscape2(widgets, context)

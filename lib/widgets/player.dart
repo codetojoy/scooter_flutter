@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 import '../models/person.dart';
@@ -5,11 +7,11 @@ import '../models/person.dart';
 class Player extends StatelessWidget {
   final Person _person;
   final bool _isAbbreviatedMode;
+  final bool _isWinner;
 
-  Player(this._person, this._isAbbreviatedMode);
+  Player(this._person, this._isAbbreviatedMode, this._isWinner);
 
-  @override
-  Widget build(BuildContext context) {
+  Widget _buildNonWinner(BuildContext context) {
     var fontSize = 12.0;
     var text = _person.name;
     if (_isAbbreviatedMode) {
@@ -21,7 +23,8 @@ class Player extends StatelessWidget {
         onTap: () {},
         splashColor: Theme.of(context).primaryColor,
         borderRadius: BorderRadius.circular(15),
-        child: Container(
+        child: Center(
+            child: Container(
           padding: const EdgeInsets.all(15),
           child: Text(text,
               style: textStyle), // Theme.of(context).textTheme.headline6),
@@ -33,6 +36,23 @@ class Player extends StatelessWidget {
             ),
             borderRadius: BorderRadius.circular(15),
           ),
-        ));
+        )));
+  }
+
+  Widget _buildWinner(BuildContext context) {
+    return TweenAnimationBuilder(
+        duration: Duration(milliseconds: 1500),
+        tween: Tween<double>(begin: 0, end: 2 * pi),
+        builder: (_, double angle, __) {
+          return Transform.rotate(
+            angle: angle,
+            child: _buildNonWinner(context),
+          );
+        });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return (_isWinner) ? _buildWinner(context) : _buildNonWinner(context);
   }
 }
