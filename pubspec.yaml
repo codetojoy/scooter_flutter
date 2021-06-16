@@ -29,6 +29,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   intl: ^0.17.0
   mockito: ^5.0.10
+  http: ^0.13.3
 
 dev_dependencies:
   flutter_test:

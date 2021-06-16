@@ -1,3 +1,4 @@
+import './api_fetcher.dart';
 import './logger.dart';
 import '../models/names.dart';
 import '../models/person.dart';
@@ -8,15 +9,15 @@ abstract class Fetcher {
 }
 
 class Fetchers {
-  static const String TYPE_SIMPLE = "simple";
-  static const String TYPE_LAZY = "lazy";
   static const String TYPE_API = "api";
+  static const String TYPE_LAZY = "lazy";
   static const String TYPE_REFLEXIVE = "reflexive";
+  static const String TYPE_SIMPLE = "simple";
 
   Fetcher buildFetcher(String type) {
     Fetcher result = SimpleFetcher();
     if (type == TYPE_API) {
-      // TODO
+      result = new ApiFetcher();
     } else if (type == TYPE_LAZY) {
       result = new LazyFetcher();
     } else if (type == TYPE_REFLEXIVE) {
