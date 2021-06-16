@@ -54,10 +54,10 @@ class ApiFetcher extends Fetcher {
   }
 
   Future<List<Person>> fetchPeople() async {
-    var delay = 4;
+    var delayInSeconds = 2;
     var doShuffle = true;
     var queryParams = {
-      'delay_in_seconds': '$delay',
+      'delay_in_seconds': '$delayInSeconds',
       'do_shuffle': '$doShuffle',
     };
     L.log('TRACER ApiFetcher');

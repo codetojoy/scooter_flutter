@@ -4,6 +4,7 @@ TODO:
 
 * next
 * brain-dump:
+    - figure out api URI for ios
     - modal chicken-test for new game, if in progress
     - config screen where user can add/remove players
     - responsive grid  

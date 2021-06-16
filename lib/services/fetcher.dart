@@ -1,5 +1,5 @@
 import './api_fetcher.dart';
-import './logger.dart';
+import '../util/logger.dart';
 import '../models/names.dart';
 import '../models/person.dart';
 

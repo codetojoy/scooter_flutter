@@ -1,4 +1,4 @@
-import '../util/fetcher.dart';
+import '../services/fetcher.dart';
 
 class Config {
   Config._() {}
