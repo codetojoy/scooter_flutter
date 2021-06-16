@@ -4,7 +4,7 @@ class Config {
   Config._() {}
 
   Fetcher getFetcher() {
-    return Fetchers().buildFetcher(Fetchers.TYPE_API);
+    return Fetchers().buildFetcher(Fetchers.TYPE_SLOW);
   }
 
   Fetcher getReflexiveFetcher() {

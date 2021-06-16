@@ -1,7 +1,6 @@
 import './api_fetcher.dart';
-import '../util/logger.dart';
-import '../models/names.dart';
 import '../models/person.dart';
+import '../util/logger.dart';
 
 abstract class Fetcher {
   Future<List<Person>> fetchPeople();
@@ -10,27 +9,50 @@ abstract class Fetcher {
 
 class Fetchers {
   static const String TYPE_API = "api";
-  static const String TYPE_LAZY = "lazy";
+  static const String TYPE_SLOW = "slow";
   static const String TYPE_REFLEXIVE = "reflexive";
   static const String TYPE_SIMPLE = "simple";
 
   Fetcher buildFetcher(String type) {
-    Fetcher result = SimpleFetcher();
+    Fetcher result = _SimpleFetcher();
     if (type == TYPE_API) {
       result = new ApiFetcher();
-    } else if (type == TYPE_LAZY) {
-      result = new LazyFetcher();
+    } else if (type == TYPE_SLOW) {
+      result = new _SlowFetcher();
     } else if (type == TYPE_REFLEXIVE) {
-      result = new ReflexiveFetcher();
+      result = new _ReflexiveFetcher();
     }
     return result;
   }
 }
 
-class SimpleFetcher implements Fetcher {
+class _SimpleFetcher implements Fetcher {
+  static const _PLAYER_NAMES = [
+    "Johann Sebastian Bach",
+    "Ludwig van Beethoven",
+    "Wolfgang Amadeus Mozart",
+    "Franz Schubert",
+    "Richard Wagner",
+    "Antonio Vivaldi",
+    "Johannes Brahms",
+    "Giuseppe Verdi",
+    "Robert Schumann",
+    "Giacomo Puccini",
+    "Antonín Dvorák",
+    "George Handel",
+    "Franz Liszt",
+    "Joseph Haydn",
+    "Frédéric Chopin",
+    "Igor Stravinsky",
+    "Gustav Mahler",
+    "Richard Strauss",
+    "Dmitri Shostakovich",
+    "Hector Berlioz",
+  ];
+
   Future<List<Person>> fetchPeople() async {
     L.log('hello from simple fetcher');
-    final people = PLAYER_NAMES.map((String name) {
+    final people = _PLAYER_NAMES.map((String name) {
       return Person(name);
     }).toList();
     return Future.value(people);
@@ -41,12 +63,12 @@ class SimpleFetcher implements Fetcher {
   }
 }
 
-class LazyFetcher implements Fetcher {
+class _SlowFetcher implements Fetcher {
   Future<List<Person>> fetchPeople() async {
     L.log('lazy fetcher sleeping');
     await Future.delayed(Duration(seconds: 10));
     L.log('lazy fetcher awake');
-    return new SimpleFetcher().fetchPeople();
+    return new _SimpleFetcher().fetchPeople();
   }
 
   Fetcher setPeople(List<Person> people) {
@@ -54,7 +76,7 @@ class LazyFetcher implements Fetcher {
   }
 }
 
-class ReflexiveFetcher implements Fetcher {
+class _ReflexiveFetcher implements Fetcher {
   late List<Person> _people;
 
   Future<List<Person>> fetchPeople() async {
