@@ -4,8 +4,11 @@ class Config {
   Config._() {}
 
   Fetcher getFetcher() {
-    final fetcher = Fetchers().buildFetcher(Fetchers.TYPE_SIMPLE);
-    return fetcher;
+    return Fetchers().buildFetcher(Fetchers.TYPE_LAZY);
+  }
+
+  Fetcher getReflexiveFetcher() {
+    return Fetchers().buildFetcher(Fetchers.TYPE_REFLEXIVE);
   }
 
   static Config instance = new Config._();

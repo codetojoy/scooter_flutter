@@ -8,36 +8,56 @@ import '../util/round.dart';
 import '../widgets/Players.dart';
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key? key, required this.title}) : super(key: key);
-
   final String title;
+
+  MyHomePage({Key? key, required this.title}) : super(key: key);
 
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  late Deck _deck;
   List<Person> _people = [];
   bool _inProgress = false;
   bool _isAbbreviatedMode = true;
   late AppBar _appBar;
+  Future<List<Person>> _playersFuture =
+      Config.instance.getFetcher().fetchPeople();
 
-  void init() {
-    _people = [];
-    final fetcher = Config.instance.getFetcher();
-    final people = fetcher.fetchPeople();
-    final numPeople = people.length;
-    _deck = Deck(numPeople);
-    _deck.shuffle();
-    _people = _deck.cards.map((int index) {
-      return people[index];
+  void _shuffle() {
+    final numPeople = _people.length;
+    Deck deck = Deck(numPeople);
+    deck.shuffle();
+    _people = deck.cards.map((int index) {
+      return _people[index];
     }).toList();
+  }
+
+  void _setFuture() {
+    if (_people.isEmpty) {
+      _playersFuture = Config.instance.getFetcher().fetchPeople();
+    } else {
+      _playersFuture = Config.instance
+          .getReflexiveFetcher()
+          .setPeople(_people)
+          .fetchPeople();
+    }
+  }
+
+  void _reloadHandler() {
+    setState(() {
+      _inProgress = false;
+      _people = [];
+      _setFuture();
+    });
   }
 
   void _shuffleHandler() {
     setState(() {
-      init();
+      if (_people.isNotEmpty) {
+        _shuffle();
+      }
+      _setFuture();
     });
   }
 
@@ -55,6 +75,7 @@ class _MyHomePageState extends State<MyHomePage> {
       _inProgress = true;
       final round = new Round();
       _people = round.play(_people);
+      _setFuture();
     });
   }
 
@@ -62,10 +83,84 @@ class _MyHomePageState extends State<MyHomePage> {
     Navigator.of(context).pushNamed(About.routeName);
   }
 
+  List<Widget> _buildHasData(
+      BuildContext context, AsyncSnapshot<List<Person>> snapshot) {
+    List<Widget> children = [];
+    List<Person>? result = snapshot.data;
+    if (result != null) {
+      _people = result.toList();
+      children = [Players(_people, _isAbbreviatedMode, _appBar)];
+    } else {
+      children = [
+        Text('internal error'),
+      ];
+    }
+    return children;
+  }
+
+  List<Widget> _buildError(
+      BuildContext context, AsyncSnapshot<List<Person>> snapshot) {
+    List<Widget> children = <Widget>[
+      const Icon(
+        Icons.error_outline,
+        color: Colors.red,
+        size: 60,
+      ),
+      Padding(
+        padding: const EdgeInsets.only(top: 16),
+        child: Text('Error: ${snapshot.error}'),
+      )
+    ];
+    return children;
+  }
+
+  List<Widget> _buildBusy(
+      BuildContext context, AsyncSnapshot<List<Person>> snapshot) {
+    List<Widget> children = <Widget>[
+      SizedBox(
+        child: CircularProgressIndicator(),
+        width: 60,
+        height: 60,
+      ),
+      Padding(
+        padding: EdgeInsets.only(top: 16),
+        child: Text('Loading players...'),
+      )
+    ];
+    return children;
+  }
+
+  Widget _buildMain(BuildContext context) {
+    return DefaultTextStyle(
+      style: Theme.of(context).textTheme.headline6!,
+      textAlign: TextAlign.center,
+      child: FutureBuilder<List<Person>>(
+        future: _playersFuture,
+        builder: (BuildContext context, AsyncSnapshot<List<Person>> snapshot) {
+          List<Widget> children = [];
+          if (snapshot.connectionState != ConnectionState.done) {
+            children = _buildBusy(context, snapshot);
+          } else if (snapshot.hasError) {
+            children = _buildError(context, snapshot);
+          } else if (snapshot.hasData) {
+            children = _buildHasData(context, snapshot);
+          }
+          return Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: children,
+            ),
+          );
+        },
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     if (!_inProgress) {
-      init();
+      _setFuture();
     }
     _appBar = AppBar(
       title: Text(widget.title),
@@ -76,15 +171,21 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       appBar: _appBar,
       body: Center(
-        child: Players(_people.toList(), _isAbbreviatedMode, _appBar),
+        child: _buildMain(context),
       ),
       floatingActionButton:
           Row(mainAxisAlignment: MainAxisAlignment.end, children: [
         FloatingActionButton(
+          heroTag: "btnReload",
+          onPressed: _reloadHandler,
+          tooltip: 'Reload',
+          child: Icon(Icons.replay),
+        ),
+        FloatingActionButton(
           heroTag: "btnShuffle",
           onPressed: _shuffleHandler,
           tooltip: 'Shuffle',
-          child: Icon(Icons.replay),
+          child: Icon(Icons.shuffle),
         ),
         FloatingActionButton(
           heroTag: "btnAbbreviatedMode",
