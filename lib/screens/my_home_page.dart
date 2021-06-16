@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 import './about.dart';
 import '../models/config.dart';
-import '../models/deck.dart';
 import '../models/person.dart';
+import '../util/items.dart';
 import '../util/round.dart';
 import '../widgets/Players.dart';
 
@@ -25,12 +25,7 @@ class _MyHomePageState extends State<MyHomePage> {
       Config.instance.getFetcher().fetchPeople();
 
   void _shuffle() {
-    final numPeople = _people.length;
-    Deck deck = Deck(numPeople);
-    deck.shuffle();
-    _people = deck.cards.map((int index) {
-      return _people[index];
-    }).toList();
+    _people = new Items().shuffle(_people);
   }
 
   void _setFuture() {
