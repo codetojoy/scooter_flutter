@@ -4,7 +4,7 @@ import './about.dart';
 import '../models/config.dart';
 import '../models/person.dart';
 import '../util/items.dart';
-import '../util/round.dart';
+import '../services/round.dart';
 import '../widgets/Players.dart';
 
 class MyHomePage extends StatefulWidget {

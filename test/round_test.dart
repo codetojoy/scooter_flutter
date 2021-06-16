@@ -1,7 +1,7 @@
 import 'package:mockito/mockito.dart';
 import 'package:scooter_flutter/models/person.dart';
 import 'package:scooter_flutter/util/dice.dart';
-import 'package:scooter_flutter/util/round.dart';
+import 'package:scooter_flutter/services/round.dart';
 import 'package:test/test.dart';
 
 class MockDice extends Mock implements Dice {
